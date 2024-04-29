@@ -1,0 +1,11 @@
+fmt:
+    cargo fmt --all && taplo fmt .
+
+tests:
+    cargo nextest run --all --cargo-quiet
+
+test package:
+    cargo nextest run -p {{package}} --cargo-quiet
+
+lint:
+    cargo clippy --all

@@ -21,7 +21,9 @@ pub fn color_to_value(_color: ResistorColor) -> u32 {
 }
 
 pub fn value_to_color_string(value: u32) -> String {
-    ResistorColor::from_int(value).map_or("value out of range".to_string(), |color| format!("{:?}", color))
+    ResistorColor::from_int(value).map_or("value out of range".to_string(), |color| {
+        format!("{:?}", color)
+    })
 }
 
 pub fn colors() -> Vec<ResistorColor> {

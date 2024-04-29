@@ -16,7 +16,7 @@ impl Player {
             health: 100,
             mana: match level >= 10 {
                 true => Some(100),
-                false => None
+                false => None,
             },
             level,
         }
@@ -25,7 +25,7 @@ impl Player {
     pub fn revive(&self) -> Option<Player> {
         match self.health {
             0 => Some(Player::new(self.level)),
-            _ => None
+            _ => None,
         }
     }
 

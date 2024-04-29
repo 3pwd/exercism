@@ -1,10 +1,14 @@
 /// Create an empty vector
-pub fn create_empty() -> Vec<u8> { vec![] }
+pub fn create_empty() -> Vec<u8> {
+    vec![]
+}
 
 /// Create a buffer of `count` zeroes.
 ///
 /// Applications often use buffers when serializing data to send over the network.
-pub fn create_buffer(count: usize) -> Vec<u8> { vec![0; count] }
+pub fn create_buffer(count: usize) -> Vec<u8> {
+    vec![0; count]
+}
 
 /// Create a vector containing the first five elements of the Fibonacci sequence.
 ///
@@ -16,7 +20,7 @@ pub fn fibonacci() -> Vec<u8> {
     for n in 0..5 {
         match n {
             0..=1 => fib.push(1),
-            _ => fib.push(fib.iter().rev().take(2).sum())
+            _ => fib.push(fib.iter().rev().take(2).sum()),
         }
     }
 

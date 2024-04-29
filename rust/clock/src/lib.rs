@@ -11,7 +11,7 @@ pub struct Clock {
 impl Clock {
     pub fn new(hours: i32, minutes: i32) -> Self {
         Self {
-            minutes: (hours * 60 + minutes).rem_euclid(1440) // 24 * 60
+            minutes: (hours * 60 + minutes).rem_euclid(1440), // 24 * 60
         }
     }
 
@@ -19,8 +19,8 @@ impl Clock {
         Self::new(0, self.minutes + minutes)
     }
 
-    pub fn hours(&self) ->i32 {
-      self.minutes.div_euclid(60).rem_euclid(24)
+    pub fn hours(&self) -> i32 {
+        self.minutes.div_euclid(60).rem_euclid(24)
     }
 
     pub fn minutes(&self) -> i32 {
@@ -30,7 +30,11 @@ impl Clock {
 
 impl fmt::Display for Clock {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", format!("{:02}:{:02}", self.hours(), self.minutes()))
+        write!(
+            f,
+            "{}",
+            format!("{:02}:{:02}", self.hours(), self.minutes())
+        )
     }
 }
 

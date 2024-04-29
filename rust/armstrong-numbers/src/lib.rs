@@ -4,8 +4,9 @@ pub fn is_armstrong_number(num: u32) -> bool {
     match num_str
         .chars()
         .map(|ch| ch.to_digit(10).unwrap())
-        .try_fold(0_u32,  |acc, x|acc.checked_add(x.pow(len))) {
+        .try_fold(0_u32, |acc, x| acc.checked_add(x.pow(len)))
+    {
         Some(result) => result == num,
-        _ => false
+        _ => false,
     }
 }

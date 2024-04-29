@@ -10,6 +10,6 @@ pub fn verse(n: u32) -> String {
 pub fn sing(start: u32, end: u32) -> String {
     match start == end {
         true => verse(end),
-        false => verse(start) + "\n" + sing(start - 1, end).as_str()
+        false => verse(start) + "\n" + sing(start - 1, end).as_str(),
     }
 }

@@ -7,7 +7,8 @@ pub enum Comparison {
 }
 
 pub fn is_sublist<T: PartialEq>(_first_list: &[T], _second_list: &[T]) -> bool {
-    _first_list.is_empty() || _second_list
+    _first_list.is_empty()
+        || _second_list
             .windows(_first_list.len())
             .any(|slice| _first_list == slice)
 }

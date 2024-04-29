@@ -1,6 +1,6 @@
 #[derive(Debug)]
-pub struct HighScores<'a>  {
-  scores: &'a[u32]
+pub struct HighScores<'a> {
+    scores: &'a [u32],
 }
 
 impl<'a> HighScores<'a> {
@@ -22,9 +22,8 @@ impl<'a> HighScores<'a> {
 
     pub fn personal_top_three(&self) -> Vec<u32> {
         let mut top_three = self.scores.to_vec();
-        top_three.sort_by(|a,b|b.cmp(a));
+        top_three.sort_by(|a, b| b.cmp(a));
         top_three.truncate(3);
         top_three
-
     }
 }
