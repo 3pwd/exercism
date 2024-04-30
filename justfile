@@ -22,7 +22,7 @@ _fmt-check-rust:
     taplo fmt rust/ --check
 
 _fmt-check-bash:
-    shfmt -d -i 2 bash/**/*.bash
+    find bash -type f -name "*.bash"! -name "bats-extra.bash" -exec shfmt -d -i 2 {} +
 
 # Lint all files
 lint: lint-rust lint-bash
