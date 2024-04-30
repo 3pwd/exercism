@@ -17,8 +17,10 @@ jobs:
           files_yaml:
             rs:
               - "rust/**/*.rs"
+              - ".github/workflows/test.yml"
             bash:
               - "bash/**/*.bats"
+              - ".github/workflows/test.yml"
 
       - name: Install Rust toolchain
         if: steps.files-changed.outputs.rs_any_changed == 'true'
