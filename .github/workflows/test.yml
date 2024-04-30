@@ -1,12 +1,5 @@
 name: Test
-on:
-  workflow_dispatch:
-  pull_request:
-    branches: [main]
-    paths: ['rust/**/*.rs', 'rust/**/*.toml', '.github/workflows/test.yml']
-  push:
-    branches: [main]
-    paths: ['rust/**/*.rs', 'rust/**/*.toml', '.github/workflows/test.yml']
+on: [pull_request, push, workflow_dispatch]
 
 jobs:
   test:
@@ -15,13 +8,33 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Get changed files
+        id: files-changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files_yaml:
+            rs:
+              - "rust/**/*.rs"
+            bash:
+              - "bash/**/*.bats"
 
       - name: Install Rust toolchain
+        if: steps.files-changed.outputs.rs_any_changed == 'true'
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           profile: minimal
 
-      - name: Run tests
+      - name: Run Cargo tests
+        if: steps.files-changed.outputs.rs_any_changed == 'true'
         run: cargo test --all
+
+      - name: Install bats
+        if: steps.files-changed.outputs.bash_any_changed == 'true'
+        run: sudo apt install bats
+
+      - name: Run Bats tests
+        if: steps.files-changed.outputs.bash_any_changed == 'true'
+        run: find bash -mindepth 1 -maxdepth 1 -type d -exec bash -c 'cd "{}" && bats -r .' \;
