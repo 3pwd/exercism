@@ -14,7 +14,7 @@ length_error() {
   error "strands must be of equal length"
 }
 
-main () {
+main() {
   [[ $# == 2 ]] || usage_error
 
   readonly strand1=$1
@@ -23,7 +23,7 @@ main () {
 
   [[ "${#strand1}" == "${#strand2}" ]] || length_error
 
-  for ((i=0;i<="${#strand1}";i++));do
+  for ((i = 0; i <= "${#strand1}"; i++)); do
     [[ "${strand1:$i:1}" == "${strand2:$i:1}" ]] || hamming+=1
   done
 

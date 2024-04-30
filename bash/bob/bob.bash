@@ -45,10 +45,10 @@ main() {
   sentence=${sentence//[[:space:]]/}
 
   answer_silence ||
-  answer_yelling_question ||
-  answer_yelling ||
-  answer_question ||
-  answer "Whatever."
+    answer_yelling_question ||
+    answer_yelling ||
+    answer_question ||
+    answer "Whatever."
 }
 
 main "$@"

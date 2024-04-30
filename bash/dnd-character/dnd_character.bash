@@ -15,21 +15,21 @@ usage_error() {
 random_ability_value() {
   local -i value=0 min=6 roll
 
-  for _ in {1..4};do
-    roll=$(( (RANDOM % 6) + 1 ))
-    (( min = (roll < min) ? roll : min, value += roll ))
+  for _ in {1..4}; do
+    roll=$(((RANDOM % 6) + 1))
+    ((min = (roll < min) ? roll : min, value += roll))
   done
 
-  printf "%i\n" "$(( value - min ))"
+  printf "%i\n" "$((value - min))"
 }
 
 modifier() {
   [[ $# == 1 && $1 =~ [[:digit:]] ]] || usage_error "modifier <number>"
-  printf "%i\n" "$(( $1 / 2 - 5 ))"
+  printf "%i\n" "$(($1 / 2 - 5))"
 }
 
 calc_hit_points() {
-  printf "%i\n" "$(( 10 + $(modifier "$constitution") ))"
+  printf "%i\n" "$((10 + $(modifier "$constitution")))"
 }
 
 generate() {
@@ -38,7 +38,7 @@ generate() {
   constitution=$(random_ability_value)
   hit_points=$(calc_hit_points)
 
-  for ability in strength dexterity constitution intelligence wisdom charisma;do
+  for ability in strength dexterity constitution intelligence wisdom charisma; do
     printf "%s " "$ability"
     [[ $ability == "constitution" ]] && printf "%i\n" "$constitution" || printf "%i\n" "$(random_ability_value)"
   done
