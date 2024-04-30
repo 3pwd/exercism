@@ -19,6 +19,6 @@ pub fn anagrams_for<'a>(word: &str, possible_anagrams: &[&'a str]) -> HashSet<&'
     possible_anagrams
         .iter()
         .filter(|w| is_anagram(&l_word, &ls_word, w))
-        .copied()
+        .copied() // converts an iterator of references (&T) to an iterator of values (T)
         .collect()
 }

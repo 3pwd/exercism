@@ -38,6 +38,8 @@ impl fmt::Display for Clock {
     }
 }
 
+// Just for completeness, redundant with the Display trait implementation
+// which is more idiomatic (the better choice when destination type is String)
 impl From<String> for Clock {
     fn from(clock: String) -> Self {
         let v: Vec<_> = clock
