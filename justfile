@@ -1,19 +1,42 @@
+alias f := fmt
+alias fcb := fmt-check-bash
+alias fcr := fmt-check-rust
+alias lb := lint-bash
+alias l := lint
+alias lr := lint-rust
+alias t := tests
+alias tb := test-bash
+alias tr := test-rust
+
 fmt:
     cargo fmt --all & taplo fmt rust/
     shfmt -w -i 2 bash/**/*.bash
 
-lint:
+fmt-check-rust:
+    cargo fmt --all -- --check
+    taplo fmt rust/ --check
+
+fmt-check-bash:
+    shfmt -d bash/**/*.bash
+
+lint: lint-rust lint-bash
+
+lint-rust:
     cargo clippy --all
+
+lint-bash:
     find bash -type f -name "*.bash" ! -name "bats-extra.bash" -exec shellcheck -a {} +
 
-bash-tests:
+tests: tests-rust tests-bash
+
+tests-bash:
     find bash -mindepth 1 -maxdepth 1 -type d -exec bash -c 'cd "{}" && bats -r .' \;
 
-bash-test exercise:
+test-bash exercise:
     cd bash/{{exercise}} && bats -r .
 
-rust-tests:
+tests-rust:
     cargo nextest run --all --cargo-quiet
 
-rust-test exercise:
+test-rust exercise:
     cargo nextest run -p {{exercise}} --cargo-quiet
