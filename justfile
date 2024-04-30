@@ -12,14 +12,14 @@ alias tar := tests-rust
 
 fmt:
     cargo fmt --all & taplo fmt rust/
-    shfmt -w -i 2 bash/**/*.bash
+    find bash -type f -name "*.bash" ! -name "bats-extra.bash" -exec shfmt -w -i 2 {} +
 
 fmt-check-rust:
     cargo fmt --all -- --check
     taplo fmt rust/ --check
 
 fmt-check-bash:
-    shfmt -d bash/**/*.bash
+    shfmt -d -i 2 bash/**/*.bash
 
 lint: lint-rust lint-bash
 

@@ -18,7 +18,7 @@ success() {
 }
 
 are_equal() {
-  if (( $1 == $2 ));then
+  if (($1 == $2)); then
     success true
   else
     success false
@@ -32,9 +32,9 @@ main() {
   local -i length=${#number}
   local -i armstrong
 
-  while read -rn 1 digit;do
-    armstrong+=$((digit**length))
-  done <<< "$number"
+  while read -rn 1 digit; do
+    armstrong+=$((digit ** length))
+  done <<<"$number"
 
   are_equal "$number" "$armstrong"
 }
