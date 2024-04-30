@@ -6,7 +6,9 @@ alias l := lint
 alias lr := lint-rust
 alias t := tests
 alias tb := test-bash
+alias tab := tests-bash
 alias tr := test-rust
+alias tar := tests-rust
 
 fmt:
     cargo fmt --all & taplo fmt rust/

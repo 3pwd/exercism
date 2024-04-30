@@ -1,4 +1,4 @@
-name: Test
+name: Pull Request
 on:
   workflow_dispatch:
   pull_request:
@@ -35,7 +35,7 @@ jobs:
 
       - name: Run Cargo tests
         if: steps.files-changed.outputs.rs_any_changed == 'true'
-        run: just rust-tests
+        run: just tar
 
       - name: Install bats
         if: steps.files-changed.outputs.bash_any_changed == 'true'
@@ -43,7 +43,7 @@ jobs:
 
       - name: Run Bats tests
         if: steps.files-changed.outputs.bash_any_changed == 'true'
-        run: just bash-tests
+        run: just tab
 
   style:
     name: style
