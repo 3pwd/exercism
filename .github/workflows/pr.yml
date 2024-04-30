@@ -1,0 +1,83 @@
+name: Pull Request
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v2
+
+      - name: Get changed files
+        id: files-changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files_yaml: |
+            rs:
+              - rust/**/*.rs
+              - .github/workflows/test.yml
+            bash:
+              - bash/**/*.bats
+              - .github/workflows/test.yml
+
+      - if: steps.files-changed.outputs.rs_any_changed == 'true'
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+
+      - if: steps.files-changed.outputs.rs_any_changed == 'true'
+        name: Run Cargo tests
+        run: just _tests-rust-ci
+
+      - if: steps.files-changed.outputs.bash_any_changed == 'true'
+        name: Install bats
+        run: sudo apt install bats
+
+      - if: steps.files-changed.outputs.bash_any_changed == 'true'
+        name: Run Bats tests
+        run: just tab
+
+  style:
+    name: style
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v2
+
+      - name: Get changed files
+        id: files-changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files_yaml: |
+            rs:
+              - rust/**/*.rs
+              - .github/workflows/test.yml
+            bash:
+              - bash/**/*.bats
+              - .github/workflows/test.yml
+
+      - if: steps.files-changed.outputs.rs_any_changed == 'true'
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+
+      - if: steps.files-changed.outputs.rs_any_changed == 'true'
+        uses: uncenter/setup-taplo@v1
+
+      - if: steps.files-changed.outputs.rs_any_changed == 'true'
+        name: Format and Lint Rust files
+        run: just fcr lr
+
+      - if: steps.files-changed.outputs.bash_any_changed == 'true'
+        name: Format and Lint Bash files
+        run: just fcb lb
