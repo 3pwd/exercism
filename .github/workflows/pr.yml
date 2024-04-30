@@ -3,8 +3,23 @@ on:
   workflow_dispatch:
   pull_request:
     branches: [main]
+    paths:
+      [
+        "bash/**/*.bash",
+        "Cargo.toml",
+        "rust/**/*.rs",
+        "rust/**/*.toml",
+        ".github/workflows/pr.yml",
+      ]
   push:
     branches: [main]
+    paths:
+      [
+        "bash/**/*.bash",
+        "Cargo.toml",
+        "rust/**/*.{toml,rs}",
+        ".github/workflows/pr.yml",
+      ]
 
 jobs:
   test:
