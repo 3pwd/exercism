@@ -1,8 +1,8 @@
 alias f := fmt
-alias fcb := fmt-check-bash
-alias fcr := fmt-check-rust
-alias lb := lint-bash
+alias fcb := _fmt-check-bash
+alias fcr := _fmt-check-rust
 alias l := lint
+alias lb := lint-bash
 alias lr := lint-rust
 alias t := tests
 alias tb := test-bash
@@ -10,38 +10,47 @@ alias tab := tests-bash
 alias tr := test-rust
 alias tar := tests-rust
 
+# Format (write) all files
 fmt:
     cargo fmt --all & taplo fmt rust/
     find bash -type f -name "*.bash" ! -name "bats-extra.bash" -exec shfmt -w -i 2 {} +
 
-fmt-check-rust:
+_fmt-check-rust:
     cargo fmt --all -- --check
     taplo fmt rust/ --check
 
-fmt-check-bash:
+_fmt-check-bash:
     shfmt -d -i 2 bash/**/*.bash
 
+# Lint all files
 lint: lint-rust lint-bash
 
+# Lint Rust files
 lint-rust:
     cargo clippy --all
 
+# Lint Bash files
 lint-bash:
     find bash -type f -name "*.bash" ! -name "bats-extra.bash" -exec shellcheck -a {} +
 
+# Run all tests
 tests: tests-rust tests-bash
 
+# Run all Bats tests
 tests-bash:
     find bash -mindepth 1 -maxdepth 1 -type d -exec bash -c 'cd "{}" && bats -r .' \;
 
+# Run Bats tests for a specific exercise
 test-bash exercise:
     cd bash/{{exercise}} && bats -r .
 
+# Run all Rust tests
 tests-rust:
     cargo nextest run --all --cargo-quiet
 
 _tests-rust-ci:
     cargo test --all
 
+# Run Rust tests for a specific exercise
 test-rust exercise:
     cargo nextest run -p {{exercise}} --cargo-quiet
