@@ -17,7 +17,8 @@ on:
       [
         "bash/**/*.bash",
         "Cargo.toml",
-        "rust/**/*.{toml,rs}",
+        "rust/**/*.rs",
+        "rust/**/*.toml",
         ".github/workflows/pr.yml",
       ]
 
