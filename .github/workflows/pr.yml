@@ -35,7 +35,7 @@ jobs:
 
       - name: Run Cargo tests
         if: steps.files-changed.outputs.rs_any_changed == 'true'
-        run: just tar
+        run: just _test-rust-ci
 
       - name: Install bats
         if: steps.files-changed.outputs.bash_any_changed == 'true'

@@ -40,5 +40,8 @@ test-bash exercise:
 tests-rust:
     cargo nextest run --all --cargo-quiet
 
+_tests-rust-ci:
+    cargo test --all
+
 test-rust exercise:
     cargo nextest run -p {{exercise}} --cargo-quiet
