@@ -79,5 +79,8 @@ jobs:
         run: just fcr lr
 
       - if: steps.files-changed.outputs.bash_any_changed == 'true'
+        uses: mfinelli/setup-shfmt@v3
+
+      - if: steps.files-changed.outputs.bash_any_changed == 'true'
         name: Format and Lint Bash files
         run: just fcb lb
