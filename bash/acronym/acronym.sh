@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# test
 main () {
   IFS=" -_*"
   local -a sentence
