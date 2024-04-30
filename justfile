@@ -1,3 +1,5 @@
+alias db := download-bash
+alias dr := download-rust
 alias f := fmt
 alias fcb := _fmt-check-bash
 alias fcr := _fmt-check-rust
@@ -54,3 +56,11 @@ _tests-rust-ci:
 # Run Rust tests for a specific exercise
 test-rust exercise:
     cargo nextest run -p {{exercise}} --cargo-quiet
+
+# Download a bash exercise
+download-bash exercise:
+    exercism download --exercise={{exercise}} --track=bash
+
+# Download a rust exercise
+download-rust exercise:
+    exercism download --exercise={{exercise}} --track=rust
