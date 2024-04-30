@@ -33,16 +33,16 @@ jobs:
           toolchain: stable
           profile: minimal
 
-      - name: Run Cargo tests
-        if: steps.files-changed.outputs.rs_any_changed == 'true'
+      - if: steps.files-changed.outputs.rs_any_changed == 'true'
+        name: Run Cargo tests
         run: just _test-rust-ci
 
-      - name: Install bats
-        if: steps.files-changed.outputs.bash_any_changed == 'true'
+      - if: steps.files-changed.outputs.bash_any_changed == 'true'
+        name: Install bats
         run: sudo apt install bats
 
-      - name: Run Bats tests
-        if: steps.files-changed.outputs.bash_any_changed == 'true'
+      - if: steps.files-changed.outputs.bash_any_changed == 'true'
+        name: Run Bats tests
         run: just tab
 
   style:
@@ -71,10 +71,13 @@ jobs:
           toolchain: stable
           profile: minimal
 
-      - name: Format and Lint Rust files
-        if: steps.files-changed.outputs.rs_any_changed == 'true'
+      - if: steps.files-changed.outputs.rs_any_changed == 'true'
+        uses: uncenter/setup-taplo@v1
+
+      - if: steps.files-changed.outputs.rs_any_changed == 'true'
+        name: Format and Lint Rust files
         run: just fcr lr
 
-      - name: Format and Lint Bash files
-        if: steps.files-changed.outputs.bash_any_changed == 'true'
+      - if: steps.files-changed.outputs.bash_any_changed == 'true'
+        name: Format and Lint Bash files
         run: just fcb lb
