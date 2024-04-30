@@ -19,13 +19,13 @@ jobs:
         id: files-changed
         uses: tj-actions/changed-files@v44
         with:
-          files_yaml:
+          files_yaml: |
             rs:
-              - "rust/**/*.rs"
-              - ".github/workflows/test.yml"
+              - rust/**/*.rs
+              - .github/workflows/test.yml
             bash:
-              - "bash/**/*.bats"
-              - ".github/workflows/test.yml"
+              - bash/**/*.bats
+              - .github/workflows/test.yml
 
       - name: Install Rust toolchain
         if: steps.files-changed.outputs.rs_any_changed == 'true'
