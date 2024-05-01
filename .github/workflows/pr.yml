@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       [
+        "bash/**/*.bats",
         "bash/**/*.bash",
         "Cargo.toml",
         "rust/**/*.rs",
@@ -15,6 +16,7 @@ on:
     branches: [main]
     paths:
       [
+        "bash/**/*.bats",
         "bash/**/*.bash",
         "Cargo.toml",
         "rust/**/*.rs",
@@ -41,6 +43,7 @@ jobs:
               - .github/workflows/test.yml
             bash:
               - bash/**/*.bash
+              - bash/**/*.bats
               - .github/workflows/test.yml
 
       - if: steps.files-changed.outputs.rs_any_changed == 'true'
@@ -79,6 +82,7 @@ jobs:
               - .github/workflows/test.yml
             bash:
               - bash/**/*.bash
+              - bash/**/*.bats
               - .github/workflows/test.yml
 
       - if: steps.files-changed.outputs.rs_any_changed == 'true'
