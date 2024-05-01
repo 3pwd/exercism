@@ -4,7 +4,6 @@ load bats-extra
 # local version: 1.1.0.0
 
 @test 'lowercase letter' {
-  #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash scrabble_score.bash 'a'
   
   assert_success
@@ -12,7 +11,6 @@ load bats-extra
 }
 
 @test 'uppercase letter' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash scrabble_score.bash 'A'
   
   assert_success
@@ -20,7 +18,6 @@ load bats-extra
 }
 
 @test 'valuable letter' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash scrabble_score.bash 'f'
   
   assert_success
@@ -28,7 +25,6 @@ load bats-extra
 }
 
 @test 'short word' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash scrabble_score.bash 'at'
   
   assert_success
@@ -36,7 +32,6 @@ load bats-extra
 }
 
 @test 'short, valuable word' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash scrabble_score.bash 'zoo'
   
   assert_success
@@ -44,7 +39,6 @@ load bats-extra
 }
 
 @test 'medium word' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash scrabble_score.bash 'street'
   
   assert_success
@@ -52,7 +46,6 @@ load bats-extra
 }
 
 @test 'medium, valuable word' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash scrabble_score.bash 'quirky'
   
   assert_success
@@ -60,7 +53,6 @@ load bats-extra
 }
 
 @test 'long, mixed-case word' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash scrabble_score.bash 'OxyphenButazone'
   
   assert_success
@@ -68,7 +60,6 @@ load bats-extra
 }
 
 @test 'english-like word' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash scrabble_score.bash 'pinata'
   
   assert_success
@@ -76,7 +67,6 @@ load bats-extra
 }
 
 @test 'empty input' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash scrabble_score.bash ''
   
   assert_success
@@ -84,7 +74,6 @@ load bats-extra
 }
 
 @test 'entire alphabet available' {
-  [[ $BATS_RUN_SKIPPED == "true" ]] || skip
   run bash scrabble_score.bash 'abcdefghijklmnopqrstuvwxyz'
   
   assert_success
