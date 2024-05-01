@@ -1,11 +1,11 @@
 [workspace]
 members = [
-  "rust/1-hello-world",
-  "rust/2-reverse-string",
-  "rust/3-gigasecond",
-  "rust/4-clock",
-  "rust/5-anagram",
-  "rust/7-sublist",
+  "rust/01-hello-world",
+  "rust/02-reverse-string",
+  "rust/03-gigasecond",
+  "rust/04-clock",
+  "rust/05-anagram",
+  "rust/07-sublist",
   "rust/10-armstrong-numbers",
   "rust/11-beer-song",
   "rust/12-difference-of-squares",

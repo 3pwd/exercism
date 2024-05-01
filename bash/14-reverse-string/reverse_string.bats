@@ -5,7 +5,7 @@ load bats-extra
 
 @test "an empty string" {
   #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash reverse_string.sh ""
+  run bash reverse_string.bash ""
 
   assert_success
   assert_output ""
@@ -13,7 +13,7 @@ load bats-extra
 
 @test "a word" {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash reverse_string.sh "robot"
+  run bash reverse_string.bash "robot"
 
   assert_success
   assert_output "tobor"
@@ -21,7 +21,7 @@ load bats-extra
 
 @test "a capitalised word" {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash reverse_string.sh "Ramen"
+  run bash reverse_string.bash "Ramen"
 
   assert_success
   assert_output "nemaR"
@@ -29,7 +29,7 @@ load bats-extra
 
 @test "a sentence with punctuation" {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash reverse_string.sh "I'm hungry!"
+  run bash reverse_string.bash "I'm hungry!"
 
   assert_success
   assert_output "!yrgnuh m'I"
@@ -37,7 +37,7 @@ load bats-extra
 
 @test "a palindrome" {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash reverse_string.sh "racecar"
+  run bash reverse_string.bash "racecar"
 
   assert_success
   assert_output "racecar"
@@ -45,7 +45,7 @@ load bats-extra
 
 @test "an even-sized word" {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash reverse_string.sh "drawer"
+  run bash reverse_string.bash "drawer"
 
   assert_success
   assert_output "reward"
@@ -57,7 +57,7 @@ load bats-extra
 
 @test "avoid globbing" {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash reverse_string.sh " a *  b"
+  run bash reverse_string.bash " a *  b"
 
   assert_success
   assert_output "b  * a "

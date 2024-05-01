@@ -5,7 +5,7 @@ load bats-extra
 
 @test 'lowercase letter' {
   #[[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash scrabble_score.sh 'a'
+  run bash scrabble_score.bash 'a'
   
   assert_success
   assert_output "1"
@@ -13,7 +13,7 @@ load bats-extra
 
 @test 'uppercase letter' {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash scrabble_score.sh 'A'
+  run bash scrabble_score.bash 'A'
   
   assert_success
   assert_output "1"
@@ -21,7 +21,7 @@ load bats-extra
 
 @test 'valuable letter' {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash scrabble_score.sh 'f'
+  run bash scrabble_score.bash 'f'
   
   assert_success
   assert_output "4"
@@ -29,7 +29,7 @@ load bats-extra
 
 @test 'short word' {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash scrabble_score.sh 'at'
+  run bash scrabble_score.bash 'at'
   
   assert_success
   assert_output "2"
@@ -37,7 +37,7 @@ load bats-extra
 
 @test 'short, valuable word' {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash scrabble_score.sh 'zoo'
+  run bash scrabble_score.bash 'zoo'
   
   assert_success
   assert_output "12"
@@ -45,7 +45,7 @@ load bats-extra
 
 @test 'medium word' {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash scrabble_score.sh 'street'
+  run bash scrabble_score.bash 'street'
   
   assert_success
   assert_output "6"
@@ -53,7 +53,7 @@ load bats-extra
 
 @test 'medium, valuable word' {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash scrabble_score.sh 'quirky'
+  run bash scrabble_score.bash 'quirky'
   
   assert_success
   assert_output "22"
@@ -61,7 +61,7 @@ load bats-extra
 
 @test 'long, mixed-case word' {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash scrabble_score.sh 'OxyphenButazone'
+  run bash scrabble_score.bash 'OxyphenButazone'
   
   assert_success
   assert_output "41"
@@ -69,7 +69,7 @@ load bats-extra
 
 @test 'english-like word' {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash scrabble_score.sh 'pinata'
+  run bash scrabble_score.bash 'pinata'
   
   assert_success
   assert_output "8"
@@ -77,7 +77,7 @@ load bats-extra
 
 @test 'empty input' {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash scrabble_score.sh ''
+  run bash scrabble_score.bash ''
   
   assert_success
   assert_output "0"
@@ -85,7 +85,7 @@ load bats-extra
 
 @test 'entire alphabet available' {
   [[ $BATS_RUN_SKIPPED == "true" ]] || skip
-  run bash scrabble_score.sh 'abcdefghijklmnopqrstuvwxyz'
+  run bash scrabble_score.bash 'abcdefghijklmnopqrstuvwxyz'
   
   assert_success
   assert_output "87"
