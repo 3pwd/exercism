@@ -6,6 +6,7 @@ alias fcr := _fmt-check-rust
 alias l := lint
 alias lb := lint-bash
 alias lr := lint-rust
+alias sr := submit-rust
 alias t := tests
 alias tb := test-bash
 alias tab := tests-bash
@@ -38,6 +39,13 @@ lint-rust:
 # Lint Bash files
 lint-bash:
     @find bash -type f -name "*.bash" ! -name "bats-extra.bash" -exec shellcheck -a {} +
+
+submit-rust exercise:
+    find rust \
+         -type f \
+         \( -path "*/[0-9]*-{{exercise}}/Cargo.toml" -o -path "*/[0-9]*-{{exercise}}/src/lib.rs" \) \
+         -exec exercism submit {} +
+    #@exercism submit rust/{{exercise}}/{src/lib.rs,Cargo.toml}
 
 # Run all tests
 tests: tests-rust tests-bash
