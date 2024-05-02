@@ -30,7 +30,7 @@ impl Player {
     }
 
     pub fn cast_spell(&mut self, mana_cost: u32) -> u32 {
-        return match self.mana {
+        match self.mana {
             Some(mana) if mana >= mana_cost => {
                 self.mana = Some(mana - mana_cost);
                 mana_cost * 2
@@ -40,6 +40,6 @@ impl Player {
                 self.health -= min(self.health, mana_cost);
                 0
             }
-        };
+        }
     }
 }
