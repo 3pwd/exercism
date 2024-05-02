@@ -30,11 +30,7 @@ impl Clock {
 
 impl fmt::Display for Clock {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "{}",
-            format!("{:02}:{:02}", self.hours(), self.minutes())
-        )
+        write!(f, "{:02}:{:02}", self.hours(), self.minutes())
     }
 }
 
@@ -43,11 +39,9 @@ impl fmt::Display for Clock {
 impl From<String> for Clock {
     fn from(clock: String) -> Self {
         let v: Vec<_> = clock
-            .split(":")
+            .split(':')
             .map(|s| s.parse().unwrap())
-            .collect::<Vec<i32>>()
-            .try_into()
-            .unwrap();
+            .collect::<Vec<i32>>();
 
         match v[..] {
             [hours, minutes] => Clock::new(hours, minutes),
