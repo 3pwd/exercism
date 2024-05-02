@@ -19,6 +19,7 @@ members = [
   "rust/grains",
   "rust/hello-world",
   "rust/high-scores",
+  "rust/prime-factors",
   "rust/leap",
   "rust/nth-prime",
   "rust/reverse-string",
