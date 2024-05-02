@@ -18,7 +18,7 @@ impl Iterator for PrimeFactors {
     fn next(&mut self) -> Option<Self::Item> {
         while self.n > 1 {
             if self.n % self.current_factor == 0 {
-                self.n = self.n / self.current_factor;
+                self.n /= self.current_factor;
                 return Some(self.current_factor);
             }
             self.current_factor += 1;
