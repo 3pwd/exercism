@@ -23,6 +23,7 @@ members = [
   "rust/leap",
   "rust/matching-brackets",
   "rust/prime-factors",
+  "rust/proverb",
   "rust/nth-prime",
   "rust/raindrops",
   "rust/reverse-string",
