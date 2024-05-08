@@ -28,6 +28,7 @@ members = [
   "rust/raindrops",
   "rust/reverse-string",
   "rust/sublist",
+  "rust/sum-of-multiples",
 ]
 
 resolver = "2"
