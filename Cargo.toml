@@ -12,6 +12,7 @@ members = [
   "rust/.archive/short-fibonacci",
   "rust/anagram",
   "rust/armstrong-numbers",
+  "rust/bob",
   "rust/beer-song",
   "rust/clock",
   "rust/difference-of-squares",
