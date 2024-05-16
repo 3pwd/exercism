@@ -65,10 +65,14 @@ _tests-rust-ci:
 test-rust exercise:
     @cargo nextest run -p {{exercise}} --cargo-quiet
 
+# Download an exercise
+_download exercise track:
+    @exercism download --exercise={{exercise}} --track={{track}}
+
 # Download a bash exercise
 download-bash exercise:
-    @exercism download --exercise={{exercise}} --track=bash
+    @just _download {{exercise}} bash
 
 # Download a rust exercise
 download-rust exercise:
-    @exercism download --exercise={{exercise}} --track=rust
+    @just _download {{exercise}} rust
