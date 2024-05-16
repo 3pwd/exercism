@@ -30,6 +30,7 @@ members = [
   "rust/nth-prime",
   "rust/raindrops",
   "rust/reverse-string",
+  "rust/series",
   "rust/sublist",
   "rust/sum-of-multiples",
 ]
