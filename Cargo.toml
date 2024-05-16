@@ -17,6 +17,7 @@ members = [
   "rust/clock",
   "rust/collatz-conjecture",
   "rust/difference-of-squares",
+  "rust/eliuds-eggs",
   "rust/gigasecond",
   "rust/grains",
   "rust/hello-world",
