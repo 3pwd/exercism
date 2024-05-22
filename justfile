@@ -63,7 +63,7 @@ _tests-rust-ci:
 
 # Run Rust tests for a specific exercise
 test-rust exercise:
-    @cargo nextest run -p {{exercise}} --cargo-quiet
+    @cargo nextest run -p {{exercise}} --cargo-quiet --all-features
 
 # Download an exercise
 _download exercise track:
