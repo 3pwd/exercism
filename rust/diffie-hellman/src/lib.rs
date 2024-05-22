@@ -1,6 +1,6 @@
 use rand::{thread_rng, Rng};
 
-pub trait Power {
+trait Power {
     fn pow_by_squaring_modulo(self, exp: u64, modulo: u64) -> u64;
 }
 
@@ -12,8 +12,8 @@ impl Power for u64 {
             if exp % 2 == 1 {
                 result = result * base % modulo;
             }
+            exp >>= 1;
             base = base * base % modulo;
-            exp /= 2;
         }
         result as u64
     }
