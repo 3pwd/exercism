@@ -73,6 +73,21 @@ _download exercise track:
 download-bash exercise:
     @just _download {{exercise}} bash
 
+_add-rust exercise:
+    #! /bin/bash
+    main() {
+      local new_member="$1"
+      local cargo_toml="Cargo.toml"
+
+      dasel put -r toml -f "$cargo_toml" -v "rust/$new_member" 'workspace.members.append()'
+      local members=$(dasel -r toml -f "$cargo_toml" -w json 'workspace.members' | jq -c 'sort')
+      dasel put -r toml -f "$cargo_toml" -w toml -t json -v "$members" workspace.members
+      taplo fmt "$cargo_toml"
+    }
+
+    main {{exercise}}
+
 # Download a rust exercise
 download-rust exercise:
     @just _download {{exercise}} rust
+    @just _add-rust {{exercise}}
