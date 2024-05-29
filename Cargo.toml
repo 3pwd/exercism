@@ -25,6 +25,7 @@ members = [
   "rust/kindergarten-garden",
   "rust/leap",
   "rust/matching-brackets",
+  "rust/minesweeper",
   "rust/prime-factors",
   "rust/proverb",
   "rust/nth-prime",
