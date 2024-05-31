@@ -10,6 +10,7 @@ members = [
   'rust/.archive/rpn-calculator',
   'rust/.archive/semi-structured-logs',
   'rust/.archive/short-fibonacci',
+  'rust/allergies',
   'rust/anagram',
   'rust/armstrong-numbers',
   'rust/beer-song',
