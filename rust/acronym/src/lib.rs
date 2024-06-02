@@ -1,18 +1,13 @@
 pub fn abbreviate(phrase: &str) -> String {
-    let mut acronym = String::new();
-    let mut previous_char = ' ';
-    let mut new_word = true;
-
-    for c in phrase.chars() {
-        if c.is_alphabetic() {
-            if new_word || (previous_char.is_lowercase() && c.is_uppercase()) {
-                acronym.push(c.to_ascii_uppercase());
-                new_word = false;
-            }
-        } else if c.is_ascii_whitespace() || c == '-' {
-            new_word = true;
-        }
-        previous_char = c;
-    }
-    acronym
+    phrase
+        .split(|c: char| c.is_ascii_whitespace() || c == '_' || c == '-')
+        .flat_map(|word| {
+            word.chars().take(1).chain(
+                word.chars()
+                    .skip_while(|c| c.is_ascii_uppercase())
+                    .filter(|c| c.is_ascii_uppercase()),
+            )
+        })
+        .collect::<String>()
+        .to_ascii_uppercase()
 }
