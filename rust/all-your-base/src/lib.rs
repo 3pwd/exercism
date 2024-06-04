@@ -14,7 +14,7 @@ pub fn convert(number: &[u32], from_base: u32, to_base: u32) -> Result<Vec<u32>,
         return Err(Error::InvalidOutputBase);
     }
 
-    if number.is_empty() {
+    if number.is_empty() || number.iter().all(|&d| d == 0) {
         return Ok(vec![0]);
     }
 
@@ -27,16 +27,12 @@ pub fn convert(number: &[u32], from_base: u32, to_base: u32) -> Result<Vec<u32>,
             false => Ok(acc + d * from_base.pow(i as u32)),
         })?;
 
-    if decimal == 0 {
-        return Ok(vec![0]);
+    let mut result = vec![];
+
+    while decimal > 0 {
+        result.insert(0, decimal % to_base);
+        decimal /= to_base;
     }
 
-    let mut result: Vec<u32> = Vec::new();
-
-    while decimal != 0 {
-        result.push(decimal % to_base);
-        decimal /= to_base; // behaves like floor division for positive integers
-    }
-    result.reverse();
     Ok(result)
 }
