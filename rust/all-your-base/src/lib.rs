@@ -25,7 +25,7 @@ pub fn convert(number: &[u32], from_base: u32, to_base: u32) -> Result<Vec<u32>,
 
     loop {
         result.insert(0, decimal % to_base);
-        decimal /= to_base;
+        decimal /= to_base; // behaves like floor division for positive numbers
         if decimal == 0 {
             break Ok(result);
         }
