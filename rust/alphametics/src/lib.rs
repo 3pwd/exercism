@@ -1,63 +1,58 @@
 use itertools::Itertools;
 use std::collections::{HashMap, HashSet};
 
-pub fn split<'a>(input: &'a str, delimiter: &str) -> Option<(&'a str, &'a str)> {
-    let mut split = input.split(delimiter);
-    let left = split.next()?;
-    let right = split.next()?;
-    Some((left, right))
-}
+fn calc_factors(input: &str) -> (Vec<char>, Vec<i64>) {
+    let mut factors = HashMap::new();
+    let mut sign = -1;
+    let mut pos = 0;
 
-pub fn find_unique_letters(input: &str) -> Vec<char> {
-    let mut seen = HashSet::new();
-    input
-        .chars()
-        .filter(|c| c.is_alphabetic() && seen.insert(*c))
-        .collect()
-}
-
-pub fn convert(input: &str, map: &HashMap<char, u8>) -> usize {
-    let result = input
-        .chars()
-        .map(|c| map.get(&c).unwrap().to_string())
-        .collect::<String>();
-    result.parse().unwrap()
+    for c in input.chars().filter(|c| !c.is_whitespace()).rev() {
+        match c {
+            '=' => {
+                sign = 1;
+                pos = 0;
+            } // we are done with the left side of the equation
+            '+' => {
+                pos = 0;
+            } // we are done with the current term
+            _ => {
+                // we get the current value for c
+                // default to 0 if not yet there
+                // update the value based on sign and pos
+                *factors.entry(c).or_insert(0) += sign * 10_i64.pow(pos);
+                pos += 1;
+            }
+        }
+    }
+    // sort pairs by absolute value of values in descending order (-)
+    factors.into_iter().sorted_by_key(|(_, v)| -v.abs()).unzip()
 }
 
 pub fn solve(input: &str) -> Option<HashMap<char, u8>> {
-    let cleaned = input
-        .chars()
-        .filter(|c| !c.is_whitespace())
-        .collect::<String>();
+    // leading digit can't be 0, so we save firts letters to check later
+    let firsts = input
+        .split(&['+', '='])
+        .filter_map(|s| s.trim().chars().next())
+        .collect::<HashSet<_>>();
+    let (letters, factors) = calc_factors(&input);
 
-    if let Some((left_side, result)) = split(&cleaned, "==") {
-        let addends: Vec<&str> = left_side.split("+").collect();
-        let letters = find_unique_letters(&cleaned);
-        // generate permutations and filter to avoid leading zeroes early
-        let perms = (0..10).permutations(letters.len()).filter(|perm| {
-            for &c in &letters {
-                let idx = letters.iter().position(|&x| x == c).unwrap();
-                // ensure that the leading character of each addend does not map to 0
-                if addends.iter().any(|&addend| addend.starts_with(c)) || result.starts_with(c) {
-                    if perm[idx] == 0 {
-                        return false;
-                    }
-                }
-            }
-            true
-        });
-
-        for perm in perms {
-            let map: HashMap<char, u8> = letters.iter().cloned().zip(perm.clone()).collect();
-
-            if addends
+    for perm in (0..=9).permutations(letters.len()) {
+        let sum = perm
+            .iter()
+            .enumerate()
+            .map(|(i, v)| v * factors.get(i).unwrap())
+            .sum::<i64>();
+        if sum == 0
+            && !perm
                 .iter()
-                .map(|addend| convert(addend, &map))
-                .sum::<usize>()
-                == convert(result, &map)
-            {
-                return Some(map);
-            }
+                .enumerate()
+                .any(|(i, v)| *v == 0 && firsts.contains(letters.get(i).unwrap()))
+        {
+            return Some(HashMap::from_iter(
+                perm.iter()
+                    .enumerate()
+                    .map(|(i, v)| (*letters.get(i).unwrap(), *v as u8)),
+            ));
         }
     }
     None
