@@ -13,6 +13,7 @@ members = [
   'rust/acronym',
   'rust/all-your-base',
   'rust/allergies',
+  'rust/alphametics',
   'rust/anagram',
   'rust/armstrong-numbers',
   'rust/beer-song',
