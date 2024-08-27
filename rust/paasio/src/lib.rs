@@ -3,7 +3,11 @@ use std::io::{Read, Result, Write};
 // the PhantomData instances in this file are just to stop compiler complaints
 // about missing generics; feel free to remove them
 
-pub struct ReadStats<R>(::std::marker::PhantomData<R>);
+pub struct ReadStats<R> {
+    bytes_read: usize,
+    inner: R,
+    reads: usize,
+}
 
 impl<R: Read> ReadStats<R> {
     // _wrapped is ignored because R is not bounded on Debug or Display and therefore
@@ -13,16 +17,19 @@ impl<R: Read> ReadStats<R> {
         todo!()
     }
 
+    /// Get a reference to the inner reader.
     pub fn get_ref(&self) -> &R {
-        todo!()
+        &self.inner
     }
 
+    /// Get the number of bytes that have been read from the wrapped reader.
     pub fn bytes_through(&self) -> usize {
-        todo!()
+        self.bytes_read
     }
 
+    /// Get the number of reads performed on the wrapped reader.
     pub fn reads(&self) -> usize {
-        todo!()
+        self.reads
     }
 }
 
@@ -32,7 +39,11 @@ impl<R: Read> Read for ReadStats<R> {
     }
 }
 
-pub struct WriteStats<W>(::std::marker::PhantomData<W>);
+pub struct WriteStats<W> {
+    bytes_written: usize,
+    inner: W,
+    writes: usize,
+}
 
 impl<W: Write> WriteStats<W> {
     // _wrapped is ignored because W is not bounded on Debug or Display and therefore
@@ -42,16 +53,19 @@ impl<W: Write> WriteStats<W> {
         todo!()
     }
 
+    /// Get a reference to the inner writer.
     pub fn get_ref(&self) -> &W {
-        todo!()
+        &self.inner
     }
 
+    /// Get the number of bytes that have been written to the wrapped writer.
     pub fn bytes_through(&self) -> usize {
-        todo!()
+        self.bytes_written
     }
 
+    /// Get the number of writes performed on the wrapped writer.
     pub fn writes(&self) -> usize {
-        todo!()
+        self.writes
     }
 }
 
