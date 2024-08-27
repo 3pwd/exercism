@@ -126,7 +126,6 @@ mod write_string {
     }
 
     #[test]
-    #[ignore]
     fn sink_buffered_windowed() {
         let data = INPUT;
         let size = data.len();
@@ -270,7 +269,6 @@ mod write_byte_literal {
     }
 
     #[test]
-    #[ignore]
     fn sink_buffered_windowed() {
         let data = INPUT;
         let size = data.len();

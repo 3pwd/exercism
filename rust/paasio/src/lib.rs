@@ -79,7 +79,8 @@ impl<W: Write> Write for WriteStats<W> {
         Ok(bytes_written)
     }
 
+    /// If writing to a BufWriter, it will effectively write to the buffer only when it is full or when explicity flushed.
     fn flush(&mut self) -> Result<()> {
-        todo!()
+        self.inner.flush()
     }
 }
