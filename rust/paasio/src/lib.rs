@@ -40,10 +40,11 @@ impl<R: Read> IoStats<R> {
 
 impl<R: Read> Read for ReadStats<R> {
     fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
-        let bytes_read = self.inner.read(buf)?;
-        self.bytes_through += bytes_read;
         self.reads += 1;
-        Ok(bytes_read)
+        self.inner.read(buf).map(|bytes| {
+            self.bytes_through += bytes;
+            bytes
+        })
     }
 }
 
@@ -56,10 +57,14 @@ impl<W: Write> IoStats<W> {
 
 impl<W: Write> Write for WriteStats<W> {
     fn write(&mut self, buf: &[u8]) -> Result<usize> {
-        let bytes_written = self.inner.write(buf)?;
-        self.bytes_through += bytes_written;
         self.writes += 1;
-        Ok(bytes_written)
+        // map is more idiomatic and concise than using `?`
+        // no need to (maybe prematurely) explicitly unwrap the result and handle error successs case
+        // especially useful when you want to perform an additional if operation succeeds
+        self.inner.write(buf).map(|bytes| {
+            self.bytes_through += bytes;
+            bytes
+        })
     }
 
     /// If writing to a BufWriter, it will effectively write to the buffer only when it is full or when explicity flushed.
