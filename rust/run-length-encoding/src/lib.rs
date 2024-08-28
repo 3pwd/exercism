@@ -43,5 +43,18 @@ pub fn encode(source: &str) -> String {
 }
 
 pub fn decode(source: &str) -> String {
-    String::new()
+    let mut result = String::new();
+    let mut count_str = String::new();
+
+    for ch in source.chars() {
+        if ch.is_ascii_digit() {
+            count_str.push(ch);
+        } else {
+            let count = count_str.parse().unwrap_or(1);
+            result.push_str(&ch.to_string().repeat(count));
+            count_str.clear();
+        }
+    }
+
+    result
 }
