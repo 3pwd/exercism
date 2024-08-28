@@ -37,6 +37,7 @@ members = [
   'rust/proverb',
   'rust/raindrops',
   'rust/reverse-string',
+  'rust/run-length-encoding',
   'rust/series',
   'rust/space-age',
   'rust/sublist',
