@@ -1,7 +1,7 @@
 pub fn encode(source: &str) -> String {
     let mut result = source
         .chars()
-        .scan((None, 0), |(last_char, count), char| {
+        .scan((None, 0), |(last_char, count): &mut(std::option::Option<std::primitive::char>, i32), char| {
             let result = match *last_char {
                 //matching character
                 Some(c) if c == char => {
@@ -11,10 +11,12 @@ pub fn encode(source: &str) -> String {
                 }
                 Some(c) => {
                     // new character
-                    let previous_run = match *count > 1 {
-                        false => String::from(c),
-                        true => format!("{count}{c}"),
+                    let previous_run = if *count > 1 {
+                        format!("{count}{c}")
+                    } else {
+                        c.to_string()
                     };
+
                     *count = 1;
                     previous_run
                 }
@@ -43,18 +45,15 @@ pub fn encode(source: &str) -> String {
 }
 
 pub fn decode(source: &str) -> String {
-    let mut result = String::new();
-    let mut count_str = String::new();
-
-    for ch in source.chars() {
-        if ch.is_ascii_digit() {
-            count_str.push(ch);
+     source.chars().scan(String::new(), |acc, c| {
+        if c.is_ascii_digit() {
+            acc.push(c);
+            Some(String::new())
         } else {
-            let count = count_str.parse().unwrap_or(1);
-            result.push_str(&ch.to_string().repeat(count));
-            count_str.clear();
+            let count = acc.parse().unwrap_or(1);
+            acc.clear();
+            Some(c.to_string().repeat(count))
         }
-    }
+    }).collect()
 
-    result
 }
