@@ -45,15 +45,9 @@ pub fn encode(source: &str) -> String {
 }
 
 pub fn decode(source: &str) -> String {
-     source.chars().scan(String::new(), |acc, c| {
-        if c.is_ascii_digit() {
-            acc.push(c);
-            Some(String::new())
-        } else {
-            let count = acc.parse().unwrap_or(1);
-            acc.clear();
-            Some(c.to_string().repeat(count))
-        }
-    }).collect()
-
+    source
+        .split_inclusive(|c: char| !c.is_ascii_digit())
+        .map(|s| s.split_at(s.len() - 1))
+        .map(|(n, c)| c.repeat(n.parse().unwrap_or(1)))
+        .collect()
 }
