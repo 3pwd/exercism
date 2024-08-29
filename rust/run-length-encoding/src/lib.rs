@@ -2,38 +2,28 @@ pub fn encode(source: &str) -> String {
     // appending a char to avoid having to deal with the last char
     format!("{source}#")
         .chars()
-        .scan(
-            (None, 0),
-            |(last_char, count): &mut (std::option::Option<std::primitive::char>, i32), char| {
-                let result = match *last_char {
-                    Some(c) if c != char => {
-                        // new character
-                        let previous_run = format!(
-                            "{}{}",
-                            if *count > 1 {
-                                count.to_string()
-                            } else {
-                                String::new()
-                            },
-                            c
-                        );
-
-                        *count = 1;
-                        previous_run
-                    }
-                    //matching character or first one
-                    _ => {
-                        *count += 1;
-                        // we don't emit anything yet
-                        String::new()
-                    }
-                };
-
-                *last_char = Some(char);
-                Some(result)
+        .fold(
+            (String::new(), None, 0),
+            |(s, last, count): (String, Option<char>, u64), c| match last {
+                Some(last) if last == c => (s, Some(last), count + 1),
+                Some(last) => (
+                    format!(
+                        "{}{}{}",
+                        s,
+                        if count > 1 {
+                            count.to_string()
+                        } else {
+                            String::new()
+                        },
+                        last
+                    ),
+                    Some(c),
+                    1,
+                ),
+                None => (s, Some(c), 1),
             },
         )
-        .collect::<String>()
+        .0
 }
 
 pub fn decode(source: &str) -> String {
