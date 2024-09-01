@@ -22,6 +22,7 @@ members = [
   'rust/collatz-conjecture',
   'rust/difference-of-squares',
   'rust/eliuds-eggs',
+  'rust/etl',
   'rust/gigasecond',
   'rust/grains',
   'rust/hello-world',
