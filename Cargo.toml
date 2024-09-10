@@ -38,6 +38,7 @@ members = [
   'rust/proverb',
   'rust/raindrops',
   'rust/reverse-string',
+  'rust/robot-simulator',
   'rust/run-length-encoding',
   'rust/series',
   'rust/space-age',
