@@ -32,6 +32,7 @@ jobs:
   changed-files:
     runs-on: ubuntu-latest
     outputs:
+      all_changed_files: ${{ steps.changed-files.outputs.all_all_changed_files }}
       bash_any_changed: ${{ steps.changed-files.outputs.bash_any_changed }}
       rs_any_changed: ${{ steps.changed-files.outputs.rs_any_changed}}
     steps:
@@ -40,6 +41,8 @@ jobs:
         id: changed-files
         with:
           files_yaml: |
+            all:
+              - '**/*'
             bash:
               - bash/**/*.bash
               - bash/**/*.bats
@@ -53,16 +56,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: extractions/setup-just@v2
-
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
-          profile: minimal
+      - if: needs.changed-files.outputs.rs_any_changed == 'true'
+        uses: Swatinem/rust-cache@v2.7.3
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
         name: Run Cargo tests
         run: just _tests-rust-ci
-
       - if: needs.changed-files.outputs.bash_any_changed == 'true'
         name: Install bats
         run: sudo apt install bats
@@ -76,20 +78,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
-          profile: minimal
+          components: rustfmt,clippy
+      - if: needs.changed-files.outputs.rs_any_changed == 'true'
+        uses: Swatinem/rust-cache@v2.7.3
+
       - if: needs.changed-files.outputs.bash_any_changed == 'true'
         uses: mfinelli/setup-shfmt@v3
       - uses: extractions/setup-just@v2
 
-      - uses: dprint/check@v2.2
-        name: Check files format
+      - name: Install dprint
+        shell: bash
+        run: |
+          curl -fsSL https://dprint.dev/install.sh | sh -s ${{ inputs.dprint-version }} > /dev/null 2>&1
+          echo "/home/runner/.dprint/bin" >> $GITHUB_PATH
+      - name: Check formatting
+        shell: bash
+        run: ~/.dprint/bin/dprint check ${{ needs.changed-files.outputs.all_changed_files }}
 
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
         name: Lint Rust files
         run: just lr
+
       - if: steps.files-changed.outputs.bash_any_changed == 'true'
         name: Lint Bash files
         run: just lb
