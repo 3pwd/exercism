@@ -21,7 +21,7 @@ Type inference is theoretically possible for functions, but is disabled as an in
 
 ```rust
 fn add(x: i32, y: i32) -> i32 {
-  x + y
+    x + y
 }
 ```
 
@@ -47,7 +47,7 @@ fn main() {
 }
 
 fn add(x: i32, y: i32) -> i32 {
-  x + y
+    x + y
 }
 ```
 
@@ -83,10 +83,18 @@ Rust items are often organized in modules. Each crate is implicitly a module, bu
 
 ```rust
 mod calc_i32 {
-    fn add(a: i32, b: i32) -> i32 { a + b }
-    fn sub(a: i32, b: i32) -> i32 { a - b }
-    fn mul(a: i32, b: i32) -> i32 { a * b }
-    fn div(a: i32, b: i32) -> i32 { a / b }
+    fn add(a: i32, b: i32) -> i32 {
+        a + b
+    }
+    fn sub(a: i32, b: i32) -> i32 {
+        a - b
+    }
+    fn mul(a: i32, b: i32) -> i32 {
+        a * b
+    }
+    fn div(a: i32, b: i32) -> i32 {
+        a / b
+    }
 }
 ```
 
@@ -96,7 +104,9 @@ Rust also supports doc-comments, which show up in the generated documentation pr
 
 ```rust
 /// The `add` function produces the sum of its arguments.
-fn add(x: i32, y: i32) -> i32 { x + y }
+fn add(x: i32, y: i32) -> i32 {
+    x + y
+}
 ```
 
 Inner doc comments are formed with the keyword `//!`, which acts identically to the `//` keyword. They apply to the item enclosing them, such as a module:

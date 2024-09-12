@@ -27,6 +27,7 @@ Different languages on Exercism have different expectations about what the resul
 On the Rust track, we don't have a test for that case, so you are free to do what you feel is most appropriate.
 
 Consider the advantages and disadvantages of the following possibilities:
+
 - Crash the program with `panic!`.
 - Return a `Result::Err`. (not possible here, because the function signature is given)
 - Return an empty vector.

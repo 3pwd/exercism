@@ -70,14 +70,22 @@ public with the `pub` modifier, just as in a standard struct.
 
 ```rust
 // fails due to private fields
-mod tuple { pub struct TupleStruct(u8, i32); }
-fn main() { let _my_tuple_struct = tuple::TupleStruct(123, -321); }
+mod tuple {
+    pub struct TupleStruct(u8, i32);
+}
+fn main() {
+    let _my_tuple_struct = tuple::TupleStruct(123, -321);
+}
 ```
 
 ```rust
 // succeeds: fields are public
-mod tuple { pub struct TupleStruct(pub u8, pub i32); }
-fn main() { let _my_tuple_struct = tuple::TupleStruct(123, -321); }
+mod tuple {
+    pub struct TupleStruct(pub u8, pub i32);
+}
+fn main() {
+    let _my_tuple_struct = tuple::TupleStruct(123, -321);
+}
 ```
 
 ## Instructions

@@ -5,7 +5,7 @@ If you need help running the tests or submitting your code, check out `HELP.md`.
 
 ## Introduction
 
-Bob is a [lackadaisical][] teenager.
+Bob is a [lackadaisical][lackadaisical] teenager.
 He likes to think that he's very cool.
 And he definitely doesn't get excited about things.
 That wouldn't be cool.
