@@ -24,7 +24,7 @@ impl Direction {
 }
 
 #[derive(Clone, Copy)]
-pub struct X(i32);
+struct X(i32);
 impl Add<i32> for X {
     type Output = Self;
 
@@ -34,12 +34,31 @@ impl Add<i32> for X {
 }
 
 #[derive(Clone, Copy)]
-pub struct Y(i32);
+struct Y(i32);
 impl Add<i32> for Y {
     type Output = Self;
 
     fn add(self, other: i32) -> Self {
         Self(self.0 + other)
+    }
+}
+
+enum Instruction {
+    TurnLeft,
+    TurnRight,
+    Advance,
+}
+
+impl TryFrom<char> for Instruction {
+    type Error = String;
+
+    fn try_from(c: char) -> Result<Self, Self::Error> {
+        match c {
+            'L' => Ok(Self::TurnLeft),
+            'R' => Ok(Self::TurnRight),
+            'A' => Ok(Self::Advance),
+            _ => Err(format!("Unexpected instructions: {c}")),
+        }
     }
 }
 
@@ -82,14 +101,14 @@ impl Robot {
     }
 
     pub fn instructions(self, instructions: &str) -> Self {
-        instructions.chars().fold(self, |robot, c| match c {
-            'L' => robot.turn_left(),
-            'R' => robot.turn_right(),
-            'A' => robot.advance(),
-            _ => {
-                panic!("Unexpected instructions: {}", c);
-            }
-        })
+        instructions
+            .chars()
+            .map(|c| Instruction::try_from(c).unwrap())
+            .fold(self, |robot, instruction| match instruction {
+                Instruction::TurnLeft => robot.turn_left(),
+                Instruction::TurnRight => robot.turn_right(),
+                Instruction::Advance => robot.advance(),
+            })
     }
 
     pub fn position(&self) -> (i32, i32) {
