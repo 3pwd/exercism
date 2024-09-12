@@ -5,7 +5,7 @@ pre-commit:
   commands:
     fmt:
       glob: '{\.*.{jsonc,,yml},**/*.{bash,json,jsonc,rs,toml,yaml,yml}}'
-      run: .bin/dprint fmt
+      run: .bin/dprint fmt {staged_files}
       stage_fixed: true
     lint-rs:
       glob: "rust/**/*.rs"

@@ -71,10 +71,10 @@ jobs:
         run: just tab
 
   style:
+    needs: changed-files
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: dprint/check@v2.2
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
         uses: actions-rs/toolchain@v1
         with:
@@ -83,6 +83,9 @@ jobs:
       - if: needs.changed-files.outputs.bash_any_changed == 'true'
         uses: mfinelli/setup-shfmt@v3
       - uses: extractions/setup-just@v2
+
+      - uses: dprint/check@v2.2
+        name: Check files format
 
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
         name: Lint Rust files
