@@ -41,7 +41,7 @@ lint-bash:
     @find bash -type f -name "*.bash" ! -name "bats-extra.bash" -exec shellcheck -a {} +
 
 submit-rust exercise:
-    @exercism submit rust/{{exercise}}/{src/lib.rs,Cargo.toml}
+    @exercism submit $(find rust/{{exercise}}/src -name '*.rs') rust/{{exercise}}/Cargo.toml
 
 # Run all tests
 tests: tests-rust tests-bash
