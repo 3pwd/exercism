@@ -53,16 +53,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: extractions/setup-just@v2
-
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
-          profile: minimal
+      - if: needs.changed-files.outputs.rs_any_changed == 'true'
+        uses: Swatinem/rust-cache@v2.7.3
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
         name: Run Cargo tests
         run: just _tests-rust-ci
-
       - if: needs.changed-files.outputs.bash_any_changed == 'true'
         name: Install bats
         run: sudo apt install bats
@@ -76,10 +75,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
-          profile: minimal
+          components: rustfmt,clippy
+      - if: needs.changed-files.outputs.rs_any_changed == 'true'
+        uses: Swatinem/rust-cache@v2.7.3
+
       - if: needs.changed-files.outputs.bash_any_changed == 'true'
         uses: mfinelli/setup-shfmt@v3
       - uses: extractions/setup-just@v2
