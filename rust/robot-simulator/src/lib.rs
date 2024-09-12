@@ -9,16 +9,12 @@ pub enum Direction {
     South,
     West,
 }
-
+const DXDY: [(i8, i8); 4] = [(0, 1), (1, 0), (0, -1), (-1, 0)];
 impl Direction {
     pub fn dxdy(&self) -> (i8, i8) {
-        match self {
-            Direction::North => (0, 1),
-            Direction::East => (1, 0),
-            Direction::South => (0, -1),
-            Direction::West => (-1, 0),
-        }
+        DXDY[*self as usize]
     }
+
     pub fn turn(&self, clockwise: bool) -> Direction {
         let discriminant = *self as i8;
         let new_discriminant = (discriminant + if clockwise { 1 } else { 3 }) % 4;
