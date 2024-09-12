@@ -18,11 +18,11 @@ After some quick calculations, you're able to provide your age in Mercury Years.
 The customs officer smiles, satisfied, and waves you through.
 You make a mental note to pre-calculate your planet-specific age _before_ future customs checks, to avoid such mix-ups.
 
-~~~~exercism/note
+```exercism/note
 If you're wondering why Pluto didn't make the cut, go watch [this YouTube video][pluto-video].
 
 [pluto-video]: https://www.youtube.com/watch?v=Z_2gbGXzFbs
-~~~~
+```
 
 ## Instructions
 
@@ -44,14 +44,14 @@ For the other planets, you have to account for their orbital period in Earth Yea
 | Uranus  | 84.016846                     |
 | Neptune | 164.79132                     |
 
-~~~~exercism/note
+```exercism/note
 The actual length of one complete orbit of the Earth around the sun is closer to 365.256 days (1 sidereal year).
 The Gregorian calendar has, on average, 365.2425 days.
 While not entirely accurate, 365.25 is the value used in this exercise.
 See [Year on Wikipedia][year] for more ways to measure a year.
 
 [year]: https://en.wikipedia.org/wiki/Year#Summary
-~~~~
+```
 
 ## Topics
 

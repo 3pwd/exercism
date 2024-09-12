@@ -16,10 +16,10 @@ To help you quickly verify the student answers, you'll be building a tool to tra
 
 Convert a sequence of digits in one base, representing a number, into a sequence of digits in another base, representing the same number.
 
-~~~~exercism/note
+```exercism/note
 Try to implement the conversion yourself.
 Do not use something else to perform the conversion for you.
-~~~~
+```
 
 ## About [Positional Notation][positional-notation]
 

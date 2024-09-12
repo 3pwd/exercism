@@ -43,6 +43,7 @@ These colors are encoded as follows:
 - White: 9
 
 The goal of this exercise is to create a way to:
+
 1. look up the numerical value associated with a particular color band
 2. convert the numerical value into a string representing color
 3. list the different band colors
