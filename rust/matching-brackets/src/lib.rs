@@ -25,10 +25,8 @@ impl Brackets {
         for &ch in &self.brackets {
             if let Some(&expected_closing_bracket) = self.pairs.get(&ch) {
                 self.stack.push(expected_closing_bracket);
-            } else {
-                if self.stack.pop() != Some(ch) {
-                    return false;
-                }
+            } else if self.stack.pop() != Some(ch) {
+                return false;
             }
         }
         self.stack.is_empty()

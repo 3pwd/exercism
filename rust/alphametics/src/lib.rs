@@ -62,7 +62,7 @@ impl<'a> Alphametics<'a> {
     }
 
     fn solve(&self) -> Option<HashMap<char, u8>> {
-        let factors = Factors::new(&self.input);
+        let factors = Factors::new(self.input);
 
         for perm in (0..=9).permutations(factors.chars.len()) {
             let sum = perm
