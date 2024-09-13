@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-main () {
-  if [[ $# = 1 ]];then
+main() {
+  if [[ $# = 1 ]]; then
     echo "Hello, $1"
     return 0
   else
@@ -10,6 +10,4 @@ main () {
   fi
 }
 
-
 main "$@"
-

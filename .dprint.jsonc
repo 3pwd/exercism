@@ -5,7 +5,7 @@
   "exec": {
     "commands": [
       { "command": "rustfmt", "exts": ["rs"] },
-      { "command": "shfmt -i 2", "exts": ["bash"] },
+      { "command": "shfmt -i 2", "exts": ["sh"] },
     ],
   },
   "plugins": [

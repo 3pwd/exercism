@@ -4,14 +4,14 @@ pre-commit:
   parallel: true
   commands:
     fmt:
-      glob: '{\.*.{jsonc,,yml},**/*.{bash,json,jsonc,rs,toml,yaml,yml}}'
+      glob: '{\.*.{jsonc,,yml},**/*.{sh,json,jsonc,rs,toml,yaml,yml}}'
       run: .bin/dprint fmt {staged_files}
       stage_fixed: true
     lint-rs:
       glob: "rust/**/*.rs"
       run: cargo clippy
     lint-bash:
-      glob: "bash/**/*.bash"
+      glob: "bash/**/*.sh"
       exclude:
-        - bash/**/bats-extra.bash
+        - bash/**/bats-extra.sh
       run: .bin/shellcheck -a {staged_files}

@@ -20,14 +20,14 @@ default:
 # Format (write) all files
 fmt:
     @cargo fmt --all & taplo fmt rust/
-    @find bash -type f -name "*.bash" ! -name "bats-extra.bash" -exec shfmt -w -i 2 {} +
+    @find bash -type f -name "*.sh" ! -name "bats-extra.sh" -exec shfmt -w -i 2 {} +
 
 _fmt-check-rust:
     @cargo fmt --all -- --check
     @taplo fmt rust/ --check
 
 _fmt-check-bash:
-    @find bash -type f -name "*.bash"! -name "bats-extra.bash" -exec shfmt -d -i 2 {} +
+    @find bash -type f -name "*.sh"! -name "bats-extra.sh" -exec shfmt -d -i 2 {} +
 
 # Lint all files
 lint: lint-rust lint-bash
@@ -38,7 +38,7 @@ lint-rust:
 
 # Lint Bash files
 lint-bash:
-    @find bash -type f -name "*.bash" ! -name "bats-extra.bash" -exec shellcheck -a {} +
+    @find bash -type f -name "*.sh" ! -name "bats-extra.sh" -exec shellcheck -a {} +
 
 submit-rust exercise:
     @exercism submit $(find rust/{{exercise}}/src -name '*.rs') rust/{{exercise}}/Cargo.toml
