@@ -55,7 +55,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: extractions/setup-just@v2
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
         uses: dtolnay/rust-toolchain@master
         with:
@@ -64,13 +63,13 @@ jobs:
         uses: Swatinem/rust-cache@v2.7.3
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
         name: Run Cargo tests
-        run: just _tests-rust-ci
+        run: make test language=rust
       - if: needs.changed-files.outputs.bash_any_changed == 'true'
         name: Install bats
         run: sudo apt install bats
       - if: needs.changed-files.outputs.bash_any_changed == 'true'
         name: Run Bats tests
-        run: just tab
+        run: make test language=bash
 
   style:
     needs: changed-files
@@ -100,8 +99,8 @@ jobs:
 
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
         name: Lint Rust files
-        run: just lr
+        run: cargo clippy --all
 
       - if: steps.files-changed.outputs.bash_any_changed == 'true'
         name: Lint Bash files
-        run: just lb
+        run: find bash -type f -name "*.bash" ! -name "bats-extra.bash" -exec shellcheck -a {} +
