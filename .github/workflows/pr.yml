@@ -3,30 +3,32 @@ on:
   workflow_dispatch:
   pull_request:
     branches: [main]
-    paths: [
-      "**/*.jsonc",
-      "**/*.json",
-      "**/*.yml",
-      "**/*.md",
-      "bash/**/*.bats",
-      "bash/**/*.bash",
-      "Cargo.toml",
-      "rust/**/*.rs",
-      "rust/**/*.toml",
-    ]
+    paths:
+      [
+        "**/*.jsonc",
+        "**/*.json",
+        "**/*.yml",
+        "**/*.md",
+        "bash/**/*.bats",
+        "bash/**/*.bash",
+        "Cargo.toml",
+        "rust/**/*.rs",
+        "rust/**/*.toml",
+      ]
   push:
     branches: [main]
-    paths: [
-      "**/*.jsonc",
-      "**/*.json",
-      "**/*.yml",
-      "**/*.md",
-      "bash/**/*.bats",
-      "bash/**/*.bash",
-      "Cargo.toml",
-      "rust/**/*.rs",
-      "rust/**/*.toml",
-    ]
+    paths:
+      [
+        "**/*.jsonc",
+        "**/*.json",
+        "**/*.yml",
+        "**/*.md",
+        "bash/**/*.bats",
+        "bash/**/*.bash",
+        "Cargo.toml",
+        "rust/**/*.rs",
+        "rust/**/*.toml",
+      ]
 
 jobs:
   changed-files:
@@ -55,15 +57,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
         uses: Swatinem/rust-cache@v2.7.3
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: nextest
       - if: needs.changed-files.outputs.rs_any_changed == 'true'
         name: Run Cargo tests
         run: make test language=rust
+
       - if: needs.changed-files.outputs.bash_any_changed == 'true'
         name: Install bats
         run: sudo apt install bats
