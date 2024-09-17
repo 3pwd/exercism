@@ -17,6 +17,7 @@ members = [
   'rust/anagram',
   'rust/armstrong-numbers',
   'rust/beer-song',
+  'rust/binary-search',
   'rust/bob',
   'rust/clock',
   'rust/collatz-conjecture',

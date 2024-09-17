@@ -10,20 +10,32 @@ INVALID_LANGUAGE := Invalid language. Use 'bash' or 'rust'.
 MISSING_LANGUAGE := Language must be specified when providing an exercise.
 INVALID_EXERCISE := Exercise not found. Have you downloaded it?
 
+.ONESHELL:
+
+define add-rust
+	$(eval new_member := $(1))
+	$(eval cargo_toml := Cargo.toml)
+	dasel put -r toml -f "$(cargo_toml)" -v "rust/$(new_member)" "workspace.members.append()"
+	members=$$(dasel -r toml -f "$(cargo_toml)" -w json "workspace.members" | jq -c "sort")
+	dasel put -r toml -f "$(cargo_toml)" -w toml -t json -v "$$members" workspace.members
+	dprint fmt "$(cargo_toml)" &> /dev/null
+endef
+
 define err
 	$(error $(shell printf "%b\n%s\n" "$(RED)Error: $(1)$(RESET)" "$(USAGE)" >&2))
 endef
 
-define check_exercise
+define check-exercise
 	$(if $(wildcard $(1)/$(2)),,$(call err, $(INVALID_EXERCISE)))
 endef
 
-define check_language
+define check-language
 	$(if $(filter-out bash rust,$(language)),$(call err, $(INVALID_LANGUAGE)))
 endef
 
 define download
-	exercism download --exercise=$(1) --track=$(2)
+	exercism download --exercise=$(1) --track=$(2) &> /dev/null
+	$(if $(filter $(2),rust),$(call add-rust,$(1)))
 endef
 
 define test-bash
@@ -68,21 +80,20 @@ help: ## Display this help message (default task)
 		}' $(MAKEFILE_LIST)
 
 download: ## language=bash|rust exercise=<exercise_name> | Download an exercise
-	$(call check_language)
-	$(call check_exercise)
+	@$(call check-language)
+	$(call check-exercise)
 	$(call download,$(exercise),$(language))
 
 test: ## [language=bash|rust] [exercise=<exercise_name>] | Run tests
 	@$(if $(language),\
-		$(call check_language)\
+		$(call check-language)\
 		$(if $(exercise),\
-			$(call check_exercise,$(language),$(exercise))\
+			$(call check-exercise,$(language),$(exercise))\
 			$(call test-$(language),$(exercise)),\
 		$(call tests-$(language))),\
 	$(call tests-bash) && $(call tests-rust))
 
-
 submit: ## language=bash|rust exercise=<exercise_name> | Submit an exercise
-	$(call check_language)
-	$(call check_exercise,$(language),$(exercise))
+	$(call check-language)
+	$(call check-exercise,$(language),$(exercise))
 	$(call submit-$(language),$(exercise))
