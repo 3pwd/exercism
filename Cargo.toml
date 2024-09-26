@@ -19,6 +19,7 @@ members = [
   'rust/beer-song',
   'rust/binary-search',
   'rust/bob',
+  'rust/bowling',
   'rust/clock',
   'rust/collatz-conjecture',
   'rust/difference-of-squares',
